@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Accueil</title>
+	<style type="text/css">
+		nav{
+			color: #77B5FE ;
+			height: 100px;
+			width:100%;
+			background-color: white;
+			font-style: italic;
+			font-weight: bold;
+			font-size: 80px;
+			/*-webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    		/*-webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+   			/*animation-name: example;
+    		/*animation-duration: 4s;
+    		/*animation-direction: alternate;*/
+		}
+		/* Safari 4.0 - 8.0 */
+		/*@-webkit-keyframes example {
+		    0%   {background-color: green;}
+		    40%  {background-color: yellow;}
+		    50%  {background-color: red;}
+		    100% {background-color: #77B5FE;}
+		}
+
+		/* Standard syntax */
+		/*@keyframes example {
+		    0%   {background-color: green;}
+		    40%  {background-color: yellow;}
+		    60%  {background-color: red;}
+		    100% {background-color: #77B5FE;}
+		}*/
+		body{
+			background-color:	#77B5FE ;
+			/*background-color: #03224C;*/
+		}
+		fieldset{
+			margin: 0 auto;
+			margin-top: 50px;
+			border-radius: 4px;
+			font-style: italic;
+			width: 50%;
+			border-color: white;
+			font-weight: bolder;
+			font-size: 20px;
+		}
+		form{
+			color : black;
+			margin: auto;
+			margin-right: 40%;
+			width: 20%;
+			padding: 2px;
+			margin-top: 10%;
+
+		}
+
+		#ident{
+			width: 185px;
+		}
+		#mdp{
+			width: 185px;
+		}
+		#connect{
+			border-radius: 10px;
+			border: solid white;
+			}
+		/*footer{
+			width: 101%;
+			margin-bottom: 0%;
+			margin-top: 7%;
+			background-color: white;
+
+		}*/
+		span{
+			font-size: 15px;
+			color:red;
+		}
+		
+			
+	</style>
+	<script type="text/javascript">
+		function validation(){
+			if ((testId(ident)==true) && (testMdp(mdp)==true)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function testId(x) {
+			if (x.value.length<1) {
+				document.getElementById("errorId").innerHTML = "Identifiant court";
+				return false;
+			} else {
+				return true;
+			}
+		}
+		function testMdp(y) {
+			if (y.value.length<1) {
+				document.getElementById("errorMdp").innerHTML = "Mot de passe court";
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+	</script>
+		
+</head>
+<body>
+	<nav>
+		<!--marquee>
+			Ecole Supérieure Polytechnique de Dakar
+		</marquee-->
+	</nav>
+	<fieldset>
+		<legend>PORTAIL DE CONNEXION</legend>
+		<p>
+			Veuillez renseigner vos informations personnelles afin d'accéder à votre espace.
+		</p>
+		<form onsubmit ="validation()" >
+		<select>
+			<option>Etudiant</option>
+			<option>Enseignant</option>
+			<option>Secrétaire</option>
+			<option>Administrateur</option>
+		</select>
+		</br>
+		<span id="errorId"></span>
+		</br><input type="text" name="login"placeholder=" Identifiant " class="logoformulaire" id="ident">
+			</br>
+		<span id="errorMdp"></span>
+		<br></br>
+		<input type="password" name="passwd"placeholder=" Mot de passe" class="logoformulaire" id="mdp">
+		</br></br>
+		<input type="submit" value="Se connecter" id="connect">
+		</form>
+	</fieldset>
+	<!--footer>
+		Copyright &copy
+	</footer-->
+</body>
+</html>
