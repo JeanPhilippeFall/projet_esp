@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2018 at 11:51 AM
+-- Generation Time: Jul 16, 2018 at 12:51 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `espace_etudiant`
+-- Database: `espaceetu`
 --
 
 -- --------------------------------------------------------
@@ -28,13 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `absence` (
   `IdAbs` int(11) NOT NULL AUTO_INCREMENT,
-  `Dat` date DEFAULT NULL,
   `IdSeance` int(11) NOT NULL,
   `IdEtu` int(11) NOT NULL,
   PRIMARY KEY (`IdAbs`),
   KEY `fk_IdEtu_Abs` (`IdEtu`),
   KEY `fk_IdSeance_Abs` (`IdSeance`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `absence`
+--
+
+INSERT INTO `absence` (`IdAbs`, `IdSeance`, `IdEtu`) VALUES
+(3, 1, 1),
+(4, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -76,9 +83,17 @@ CREATE TABLE IF NOT EXISTS `classe` (
   `IdDep` int(11) NOT NULL,
   `IdNiv` int(11) NOT NULL,
   PRIMARY KEY (`IdClasse`),
-  UNIQUE KEY `IdDep` (`IdDep`),
-  UNIQUE KEY `IdNiv` (`IdNiv`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `IdDep` (`IdDep`),
+  KEY `IdNiv` (`IdNiv`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `classe`
+--
+
+INSERT INTO `classe` (`IdClasse`, `Nom`, `IdDep`, `IdNiv`) VALUES
+(3, 'DUT1 info', 1, 1),
+(4, 'DUT1 TR', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +105,15 @@ CREATE TABLE IF NOT EXISTS `departement` (
   `IdDep` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`IdDep`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `departement`
+--
+
+INSERT INTO `departement` (`IdDep`, `Nom`) VALUES
+(1, 'Genie Informatique'),
+(2, 'Genie Electrique');
 
 -- --------------------------------------------------------
 
@@ -118,7 +141,15 @@ CREATE TABLE IF NOT EXISTS `ec` (
   `IdUe` int(11) NOT NULL,
   PRIMARY KEY (`IdEc`),
   KEY `fk_IdUe_EC` (`IdUe`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `ec`
+--
+
+INSERT INTO `ec` (`IdEc`, `Matiere`, `IdUe`) VALUES
+(3, 'langage C', 1),
+(4, 'algo', 1);
 
 -- --------------------------------------------------------
 
@@ -133,6 +164,13 @@ CREATE TABLE IF NOT EXISTS `ecsemestre` (
   KEY `fk_IdSem_ECSem` (`IdSem`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `ecsemestre`
+--
+
+INSERT INTO `ecsemestre` (`IdEc`, `IdSem`) VALUES
+(3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -144,7 +182,14 @@ CREATE TABLE IF NOT EXISTS `enseignant` (
   `Nom` varchar(30) DEFAULT NULL,
   `Prenom` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`IdEns`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `enseignant`
+--
+
+INSERT INTO `enseignant` (`IdEns`, `Nom`, `Prenom`) VALUES
+(1, 'Diop', 'Mr');
 
 -- --------------------------------------------------------
 
@@ -177,7 +222,15 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   PRIMARY KEY (`IdEtu`),
   KEY `fk_IdClasse_Etu` (`IdClasse`),
   KEY `fk_IdNiv_Etu` (`IdNiv`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `etudiant`
+--
+
+INSERT INTO `etudiant` (`IdEtu`, `Nom`, `Prenom`, `Adresse`, `Tel`, `DatNes`, `IdClasse`, `IdNiv`) VALUES
+(1, 'GUEYE', 'Aliou', 'fann-Dakar', '77 000 00 00', '1996-01-02', 3, 1),
+(2, 'FALL', 'Jean ', 'ESP-DAKAR', '77 111 11 11', '1996-05-03', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -189,16 +242,23 @@ CREATE TABLE IF NOT EXISTS `identifiant` (
   `IdId` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(30) NOT NULL,
   `motDePasse` varchar(100) NOT NULL,
-  `IdAdmin` int(11) NOT NULL,
-  `IdEtu` int(11) NOT NULL,
-  `IdEns` int(11) NOT NULL,
-  `IdSec` int(11) NOT NULL,
+  `IdAdmin` int(11) DEFAULT NULL,
+  `IdEtu` int(11) DEFAULT NULL,
+  `IdEns` int(11) DEFAULT NULL,
+  `IdSec` int(11) DEFAULT NULL,
   PRIMARY KEY (`IdId`),
   KEY `fk_IdAdmin_Administrateur` (`IdAdmin`),
   KEY `fk_IdEtu_Etudiant` (`IdEtu`),
   KEY `fk_IdEns_Enseignant` (`IdEns`),
   KEY `fk_IdSec_Secretaire` (`IdSec`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `identifiant`
+--
+
+INSERT INTO `identifiant` (`IdId`, `login`, `motDePasse`, `IdAdmin`, `IdEtu`, `IdEns`, `IdSec`) VALUES
+(1, 'ens@ens.com', 'passer', NULL, NULL, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -225,7 +285,15 @@ CREATE TABLE IF NOT EXISTS `niveau` (
   `IdNiv` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`IdNiv`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `niveau`
+--
+
+INSERT INTO `niveau` (`IdNiv`, `Nom`) VALUES
+(1, 'DUT1'),
+(2, 'DUT2');
 
 -- --------------------------------------------------------
 
@@ -235,14 +303,22 @@ CREATE TABLE IF NOT EXISTS `niveau` (
 
 CREATE TABLE IF NOT EXISTS `note` (
   `IdNote` int(11) NOT NULL AUTO_INCREMENT,
-  `Cc` varchar(30) DEFAULT NULL,
-  `Ds` varchar(30) DEFAULT NULL,
+  `Cc` double(30,2) DEFAULT NULL,
+  `Ds` double(30,2) DEFAULT NULL,
   `IdEc` int(11) NOT NULL,
   `IdEtu` int(11) NOT NULL,
   PRIMARY KEY (`IdNote`),
   KEY `fk_IdEc_Note` (`IdEc`),
   KEY `fk_IdEtu_Note` (`IdEtu`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `note`
+--
+
+INSERT INTO `note` (`IdNote`, `Cc`, `Ds`, `IdEc`, `IdEtu`) VALUES
+(3, 15.12, 18.00, 3, 1),
+(4, 16.00, 18.00, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -252,10 +328,19 @@ CREATE TABLE IF NOT EXISTS `note` (
 
 CREATE TABLE IF NOT EXISTS `seancedecours` (
   `IdSeance` int(11) NOT NULL AUTO_INCREMENT,
-  `matiere` varchar(30) DEFAULT NULL,
   `dat` date DEFAULT NULL,
-  PRIMARY KEY (`IdSeance`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `IdEc` int(11) NOT NULL,
+  PRIMARY KEY (`IdSeance`),
+  KEY `IdEc` (`IdEc`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `seancedecours`
+--
+
+INSERT INTO `seancedecours` (`IdSeance`, `dat`, `IdEc`) VALUES
+(1, '2018-07-09', 1),
+(2, '2018-07-05', 2);
 
 -- --------------------------------------------------------
 
@@ -282,7 +367,15 @@ CREATE TABLE IF NOT EXISTS `semestre` (
   `IdSem` int(11) NOT NULL AUTO_INCREMENT,
   `NomSemestre` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`IdSem`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `semestre`
+--
+
+INSERT INTO `semestre` (`IdSem`, `NomSemestre`) VALUES
+(1, 'Semestre 1'),
+(2, 'Semestre 2');
 
 -- --------------------------------------------------------
 
@@ -294,7 +387,15 @@ CREATE TABLE IF NOT EXISTS `ue` (
   `IdUe` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`IdUe`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `ue`
+--
+
+INSERT INTO `ue` (`IdUe`, `Nom`) VALUES
+(1, 'Informatique'),
+(2, 'mathematique');
 
 -- --------------------------------------------------------
 
@@ -338,7 +439,7 @@ ALTER TABLE `classe`
 -- Constraints for table `diplôme`
 --
 ALTER TABLE `diplôme`
-  ADD CONSTRAINT `fk_IdNiv_Diplome` FOREIGN KEY (`idNiv`) REFERENCES `niveau` (`idNiv`);
+  ADD CONSTRAINT `fk_IdNiv_Diplome` FOREIGN KEY (`IdNiv`) REFERENCES `niveau` (`idNiv`);
 
 --
 -- Constraints for table `ec`
@@ -358,13 +459,13 @@ ALTER TABLE `ecsemestre`
 --
 ALTER TABLE `enseignantclasse`
   ADD CONSTRAINT `fk_IdEns_EnseignantClasse` FOREIGN KEY (`IdEns`) REFERENCES `enseignant` (`IdEns`),
-  ADD CONSTRAINT `fk_IdClasse_EnseignantClasse` FOREIGN KEY (`IdClasse`) REFERENCES `classe` (`idClasse`);
+  ADD CONSTRAINT `fk_IdClasse_EnseignantClasse` FOREIGN KEY (`IdClasse`) REFERENCES `classe` (`IdClasse`);
 
 --
 -- Constraints for table `etudiant`
 --
 ALTER TABLE `etudiant`
-  ADD CONSTRAINT `fk_IdClasse_Etu` FOREIGN KEY (`IdClasse`) REFERENCES `classe` (`idClasse`),
+  ADD CONSTRAINT `fk_IdClasse_Etu` FOREIGN KEY (`IdClasse`) REFERENCES `classe` (`IdClasse`),
   ADD CONSTRAINT `fk_IdNiv_Etu` FOREIGN KEY (`IdNiv`) REFERENCES `niveau` (`idNiv`);
 
 --
@@ -372,8 +473,8 @@ ALTER TABLE `etudiant`
 --
 ALTER TABLE `identifiant`
   ADD CONSTRAINT `fk_IdAdmin_Administrateur` FOREIGN KEY (`IdAdmin`) REFERENCES `administrateur` (`IdAdmin`),
-  ADD CONSTRAINT `fk_IdEtu_Etudiant` FOREIGN KEY (`IdEtu`) REFERENCES `etudiant` (`IdEtu`),
   ADD CONSTRAINT `fk_IdEns_Enseignant` FOREIGN KEY (`IdEns`) REFERENCES `enseignant` (`IdEns`),
+  ADD CONSTRAINT `fk_IdEtu_Etudiant` FOREIGN KEY (`IdEtu`) REFERENCES `etudiant` (`IdEtu`),
   ADD CONSTRAINT `fk_IdSec_Secretaire` FOREIGN KEY (`IdSec`) REFERENCES `secretaire` (`IdSec`);
 
 --
@@ -393,7 +494,7 @@ ALTER TABLE `note`
 -- Constraints for table `secretaire`
 --
 ALTER TABLE `secretaire`
-  ADD CONSTRAINT `fk_IdDep_Sec` FOREIGN KEY (`idDep`) REFERENCES `departement` (`IdDep`);
+  ADD CONSTRAINT `fk_IdDep_Sec` FOREIGN KEY (`IdDep`) REFERENCES `departement` (`IdDep`);
 
 --
 -- Constraints for table `ueniveau`
